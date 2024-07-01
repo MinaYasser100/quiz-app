@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:quiz_app/core/constant/app_color.dart';
 import 'package:quiz_app/core/styles/styles.dart';
+import 'package:quiz_app/features/splash/presentation/views/function/navigation_to_toggle_view.dart';
 
 class SplashBodyView extends StatefulWidget {
   const SplashBodyView({super.key});
@@ -18,24 +19,9 @@ class _SplashBodyViewState extends State<SplashBodyView>
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(
-      duration: const Duration(seconds: 5),
-      vsync: this,
-    );
-    _offsetAnimation = Tween<Offset>(
-      begin: const Offset(0.0, 1.0),
-      end: const Offset(0.0, 0.0),
-    ).animate(
-      CurvedAnimation(
-        parent: _controller,
-        curve: Curves.easeInOutCubicEmphasized,
-      ),
-    );
-    _colorAnimation = ColorTween(
-      end: AppColor.secondColor,
-      begin: Colors.grey,
-    ).animate(_controller);
+    prepareAnimationController();
     _controller.forward();
+    navigationToToggleView(context);
   }
 
   @override
@@ -72,5 +58,25 @@ class _SplashBodyViewState extends State<SplashBodyView>
         ),
       ],
     );
+  }
+
+  void prepareAnimationController() {
+    _controller = AnimationController(
+      duration: const Duration(seconds: 5),
+      vsync: this,
+    );
+    _offsetAnimation = Tween<Offset>(
+      begin: const Offset(0.0, 1.0),
+      end: const Offset(0.0, 0.0),
+    ).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: Curves.easeInOutCubicEmphasized,
+      ),
+    );
+    _colorAnimation = ColorTween(
+      end: AppColor.secondColor,
+      begin: Colors.grey,
+    ).animate(_controller);
   }
 }
