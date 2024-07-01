@@ -6,4 +6,9 @@ abstract class Styles {
     fontWeight: FontWeight.bold,
     color: Color.fromARGB(255, 30, 213, 245),
   );
+
+  static TextStyle textStyle20 = const TextStyle(
+    fontSize: 20,
+    fontWeight: FontWeight.w600,
+  );
 }
