@@ -4,6 +4,7 @@ import 'package:quiz_app/core/constant/app_color.dart';
 import 'package:quiz_app/features/teacher/presentation/manager/add_new_question_cubit.dart';
 
 import 'custom_answer_position.dart';
+import 'custom_remove_question_button.dart';
 import 'custom_text_from_field.dart';
 
 class CustomQuestionWidget extends StatelessWidget {
@@ -56,35 +57,6 @@ class CustomQuestionWidget extends StatelessWidget {
             },
           ),
       ],
-    );
-  }
-}
-
-class CustomRemoveQuestionButton extends StatelessWidget {
-  const CustomRemoveQuestionButton({
-    super.key,
-    required this.index,
-    this.onTap,
-  });
-
-  final int index;
-  final Function()? onTap;
-  @override
-  Widget build(BuildContext context) {
-    return Positioned(
-      top: -12,
-      right: -12,
-      child: GestureDetector(
-        onTap: onTap,
-        child: const CircleAvatar(
-          radius: 24,
-          backgroundColor: AppColor.secondColor,
-          child: Icon(
-            Icons.remove_circle_outline_rounded,
-            color: Colors.white,
-          ),
-        ),
-      ),
     );
   }
 }
