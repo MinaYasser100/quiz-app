@@ -11,7 +11,6 @@ class CustomTextFromField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      autofocus: true,
       enableInteractiveSelection: true,
       cursorColor: AppColor.secondColor,
       decoration: InputDecoration(

@@ -3,7 +3,7 @@ import 'package:quiz_app/core/constant/app_color.dart';
 
 AppBar teacherAppBar() {
   return AppBar(
-    foregroundColor: AppColor.primaryColor,
+    foregroundColor: AppColor.secondColor,
     title: const Text(
       'Create Quiz',
       style: TextStyle(
@@ -11,7 +11,7 @@ AppBar teacherAppBar() {
       ),
     ),
     centerTitle: true,
-    shadowColor: AppColor.primaryColor,
+    shadowColor: AppColor.secondColor,
     elevation: 0.7,
   );
 }
