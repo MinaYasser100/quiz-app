@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'func/teacher_app_bar.dart';
 import 'widgets/teacher_body_view.dart';
 
 class TeacherView extends StatelessWidget {
@@ -8,7 +9,7 @@ class TeacherView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: teacherAppBar(),
       body: const TeacherBodyView(),
     );
   }
