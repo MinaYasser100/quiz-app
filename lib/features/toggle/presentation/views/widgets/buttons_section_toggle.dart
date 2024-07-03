@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quiz_app/core/widgets/custom_button_widget.dart';
+import 'package:quiz_app/features/student/presentation/views/student_view.dart';
 
 import '../../../../teacher/presentation/view/teacher_view.dart';
 
@@ -27,7 +28,13 @@ class ButtonsSectionToggle extends StatelessWidget {
           height: 20,
         ),
         CustomButtonWidget(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const StudentView(),
+                ));
+          },
           text: 'Student',
         ),
         const SizedBox(
