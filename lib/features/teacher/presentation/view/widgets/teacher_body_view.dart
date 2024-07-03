@@ -29,9 +29,25 @@ class TeacherBodyView extends StatelessWidget {
                       childCount: state.questions.length,
                     ),
                   ),
-                  const SliverFillRemaining(
+                  SliverFillRemaining(
                     hasScrollBody: false,
-                    child: TeacherButtonSectionBody(),
+                    child: TeacherButtonSectionBody(
+                      onFinish: () async {
+                        try {
+                          await context
+                              .read<AddNewQuestionCubit>()
+                              .collectAndUploadData(context);
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                  content: Text('Data uploaded successfully')));
+                        } catch (e) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text(e.toString())));
+                          print('-------------------------------------');
+                          print(e.toString());
+                        }
+                      },
+                    ),
                   ),
                 ],
               ),

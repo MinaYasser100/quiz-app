@@ -11,8 +11,27 @@ class CustomQuestionWidget extends StatelessWidget {
   const CustomQuestionWidget({
     super.key,
     required this.index,
+    required this.questionController,
+    required this.answerControllers,
+    required this.selectedAnswerIndex,
+    required this.onAnswerSelected,
   });
   final int index;
+  final TextEditingController questionController;
+  final List<TextEditingController> answerControllers;
+  final int selectedAnswerIndex;
+  final ValueChanged<int> onAnswerSelected;
+
+  CustomQuestionWidget copyWith({int? index, int? selectedAnswerIndex}) {
+    return CustomQuestionWidget(
+      index: index ?? this.index,
+      questionController: questionController,
+      answerControllers: answerControllers,
+      selectedAnswerIndex: selectedAnswerIndex ?? this.selectedAnswerIndex,
+      onAnswerSelected: onAnswerSelected,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -28,23 +47,26 @@ class CustomQuestionWidget extends StatelessWidget {
               width: 1.0, // Border width
             ),
           ),
-          child: const Padding(
-            padding: EdgeInsets.all(8.0),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Question'),
-                CustomTextFromField(),
-                SizedBox(
+                const Text('Question'),
+                CustomTextFromField(
+                  controller: questionController,
+                ),
+                const SizedBox(
                   height: 20,
                 ),
-                Text('Answer'),
-                CustomAnswerPosition(),
-                CustomAnswerPosition(),
-                CustomAnswerPosition(),
-                CustomAnswerPosition(
-                  isLast: true,
-                ),
+                const Text('Answer'),
+                for (int i = 0; i < answerControllers.length; i++)
+                  CustomAnswerPosition(
+                    controller: answerControllers[i],
+                    isLast: i == answerControllers.length - 1 ? true : false,
+                    isSelect: i == selectedAnswerIndex,
+                    onSelect: () => onAnswerSelected(i),
+                  ),
               ],
             ),
           ),

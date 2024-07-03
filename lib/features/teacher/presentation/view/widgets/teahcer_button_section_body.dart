@@ -7,8 +7,9 @@ import 'package:quiz_app/features/teacher/presentation/manager/add_new_question_
 class TeacherButtonSectionBody extends StatelessWidget {
   const TeacherButtonSectionBody({
     super.key,
+    required this.onFinish,
   });
-
+  final void Function() onFinish;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -24,7 +25,7 @@ class TeacherButtonSectionBody extends StatelessWidget {
         CustomButtonWidget(
           text: 'Finish',
           buttonColor: AppColor.secondColor,
-          onPressed: () {},
+          onPressed: onFinish,
         ),
         const SizedBox(
           height: 20,
