@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:quiz_app/core/constant/app_color.dart';
 
 class CustomRemoveQuestionButton extends StatelessWidget {
   const CustomRemoveQuestionButton({
     super.key,
     required this.index,
     this.onTap,
+    required this.color,
   });
 
   final int index;
   final Function()? onTap;
+  final Color color;
   @override
   Widget build(BuildContext context) {
     return Positioned(
@@ -17,10 +18,10 @@ class CustomRemoveQuestionButton extends StatelessWidget {
       right: -12,
       child: GestureDetector(
         onTap: onTap,
-        child: const CircleAvatar(
+        child: CircleAvatar(
           radius: 24,
-          backgroundColor: AppColor.secondColor,
-          child: Icon(
+          backgroundColor: color,
+          child: const Icon(
             Icons.remove_circle_outline_rounded,
             color: Colors.white,
           ),

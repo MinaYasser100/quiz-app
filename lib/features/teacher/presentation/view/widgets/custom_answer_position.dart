@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:quiz_app/core/constant/app_color.dart';
 
 class CustomAnswerPosition extends StatelessWidget {
   const CustomAnswerPosition({
@@ -8,12 +7,13 @@ class CustomAnswerPosition extends StatelessWidget {
     required this.controller,
     this.isSelect = false,
     required this.onSelect,
+    required this.color,
   });
   final bool isLast;
   final TextEditingController controller;
   final bool isSelect;
   final VoidCallback onSelect;
-
+  final Color color;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -25,7 +25,7 @@ class CustomAnswerPosition extends StatelessWidget {
                 isSelect
                     ? Icons.radio_button_checked
                     : Icons.radio_button_unchecked,
-                color: AppColor.secondColor,
+                color: color,
               ),
               onPressed: onSelect,
             ),

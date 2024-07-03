@@ -15,13 +15,14 @@ class CustomQuestionWidget extends StatelessWidget {
     required this.answerControllers,
     required this.selectedAnswerIndex,
     required this.onAnswerSelected,
+    this.color = AppColor.secondColor,
   });
   final int index;
   final TextEditingController questionController;
   final List<TextEditingController> answerControllers;
   final int selectedAnswerIndex;
   final ValueChanged<int> onAnswerSelected;
-
+  final Color color;
   CustomQuestionWidget copyWith({int? index, int? selectedAnswerIndex}) {
     return CustomQuestionWidget(
       index: index ?? this.index,
@@ -29,6 +30,7 @@ class CustomQuestionWidget extends StatelessWidget {
       answerControllers: answerControllers,
       selectedAnswerIndex: selectedAnswerIndex ?? this.selectedAnswerIndex,
       onAnswerSelected: onAnswerSelected,
+      color: color,
     );
   }
 
@@ -43,7 +45,7 @@ class CustomQuestionWidget extends StatelessWidget {
             color: Colors.grey[100],
             borderRadius: BorderRadius.circular(10),
             border: Border.all(
-              color: AppColor.secondColor, // Border color
+              color: color, // Border color
               width: 1.0, // Border width
             ),
           ),
@@ -55,6 +57,7 @@ class CustomQuestionWidget extends StatelessWidget {
                 const Text('Question'),
                 CustomTextFromField(
                   controller: questionController,
+                  color: color,
                 ),
                 const SizedBox(
                   height: 20,
@@ -62,6 +65,7 @@ class CustomQuestionWidget extends StatelessWidget {
                 const Text('Answer'),
                 for (int i = 0; i < answerControllers.length; i++)
                   CustomAnswerPosition(
+                    color: color,
                     controller: answerControllers[i],
                     isLast: i == answerControllers.length - 1 ? true : false,
                     isSelect: i == selectedAnswerIndex,
@@ -73,6 +77,7 @@ class CustomQuestionWidget extends StatelessWidget {
         ),
         if (index != 0)
           CustomRemoveQuestionButton(
+            color: color,
             index: index,
             onTap: () {
               context.read<AddNewQuestionCubit>().removeQuestion(index);

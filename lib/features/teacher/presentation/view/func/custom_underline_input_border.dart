@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:quiz_app/core/constant/app_color.dart';
 
-UnderlineInputBorder customUnderlineInputBorder() {
-  return const UnderlineInputBorder(
+UnderlineInputBorder customUnderlineInputBorder({required Color color}) {
+  return UnderlineInputBorder(
     borderSide: BorderSide(
-      color: AppColor.secondColor,
+      color: color,
     ), // Specify border color here
   );
 }
