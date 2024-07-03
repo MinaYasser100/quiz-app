@@ -43,8 +43,6 @@ class TeacherBodyView extends StatelessWidget {
                         } catch (e) {
                           ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(content: Text(e.toString())));
-                          print('-------------------------------------');
-                          print(e.toString());
                         }
                       },
                     ),

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:quiz_app/features/teacher/presentation/view/func/copy_quiz_id_show_dialog.dart';
 import '../view/func/custom_error_create_answer_show_dialog.dart';
 import '../view/widgets/custom_question_widget.dart';
 
@@ -73,11 +74,24 @@ class AddNewQuestionCubit extends Cubit<AddNewQuestionStates> {
               .where((element) => element != null)
               .toList();
       if (questionData.isNotEmpty) {
-        await FirebaseFirestore.instance
-            .collection('questions')
-            .add({'questions': questionData});
+        try {
+          DocumentReference docRef = await FirebaseFirestore.instance
+              .collection('questions')
+              .add({'questions': questionData});
+          String quizID = docRef.id;
+          await copyQuizIdShowDialog(context, quizID);
+        } catch (e) {
+          errorScaffoldMessenger(context, e);
+        }
       }
     }
+  }
+
+  void errorScaffoldMessenger(BuildContext context, Object e) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(
+      e.toString(),
+    )));
   }
 
   void selectCorrectAnswer(
