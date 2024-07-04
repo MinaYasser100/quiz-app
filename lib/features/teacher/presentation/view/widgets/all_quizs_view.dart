@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quiz_app/core/constant/app_color.dart';
+import 'package:quiz_app/features/teacher/presentation/manager/all_quizs_cubit/all_quizs_cubit.dart';
 
 import 'all_quizs_body_view.dart';
 
@@ -8,19 +10,22 @@ class AllQuizsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        foregroundColor: AppColor.secondColor,
-        title: const Text(
-          'All Your Quizs',
-          style: TextStyle(
-            fontWeight: FontWeight.w600,
+    return BlocProvider(
+      create: (context) => AllQuizsCubit()..getQuizIdsHive(),
+      child: Scaffold(
+        appBar: AppBar(
+          foregroundColor: AppColor.secondColor,
+          title: const Text(
+            'All Your Quizzes',
+            style: TextStyle(
+              fontWeight: FontWeight.w600,
+            ),
           ),
+          centerTitle: true,
+          elevation: 0.7,
         ),
-        centerTitle: true,
-        elevation: 0.7,
+        body: const AllQuizsBodyView(),
       ),
-      body: const AllQuizsBodyView(),
     );
   }
 }
