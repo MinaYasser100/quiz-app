@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quiz_app/core/widgets/custom_button_widget.dart';
+import 'package:quiz_app/features/student/presentation/manager/cubit/student_cubit.dart';
 import 'package:quiz_app/features/student/presentation/views/student_view.dart';
 import 'package:quiz_app/features/teacher/presentation/view/widgets/custom_text_from_field.dart';
 
@@ -26,38 +28,58 @@ class _ButtonsSectionToggleState extends State<ButtonsSectionToggle> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        CustomButtonWidget(
-          onPressed: () {
+    return BlocProvider(
+      create: (context) => StudentCubit(),
+      child: BlocConsumer<StudentCubit, StudentState>(
+        listener: (context, state) {
+          if (state is StudentCubitGetQuizQuestionsSuccess) {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const TeacherView(),
+                builder: (context) => StudentView(
+                  quizCode: quizCodeController.text,
+                  questions: state.questions,
+                ),
               ),
             );
-          },
-          text: 'Teacher',
-        ),
-        const SizedBox(
-          height: 20,
-        ),
-        CustomButtonWidget(
-          onPressed: () {
-            quizCodeShowDialog(context);
-          },
-          text: 'Student',
-        ),
-        const SizedBox(
-          height: 100,
-        ),
-      ],
+          }
+        },
+        builder: (context, state) {
+          return Column(
+            children: [
+              CustomButtonWidget(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const TeacherView(),
+                    ),
+                  );
+                },
+                text: 'Teacher',
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              CustomButtonWidget(
+                onPressed: () {
+                  quizCodeShowDialog(context);
+                },
+                text: 'Student',
+              ),
+              const SizedBox(
+                height: 100,
+              ),
+            ],
+          );
+        },
+      ),
     );
   }
 
-  Future<dynamic> quizCodeShowDialog(BuildContext context) {
+  Future<dynamic> quizCodeShowDialog(BuildContext parentContext) {
     return showDialog(
-      context: context,
+      context: parentContext,
       builder: (context) => AlertDialog(
         title: const Text(
           'Quiz Code',
@@ -85,10 +107,20 @@ class _ButtonsSectionToggleState extends State<ButtonsSectionToggle> {
         actions: [
           TextButton(
             onPressed: () {
-              navigationToQuiz(context);
+              navigationToQuiz(parentContext);
             },
             child: const Text(
               'OK',
+              style:
+                  TextStyle(color: Colors.black, fontWeight: FontWeight.w600),
+            ),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: const Text(
+              'Cancel',
               style:
                   TextStyle(color: Colors.black, fontWeight: FontWeight.w600),
             ),
@@ -98,16 +130,10 @@ class _ButtonsSectionToggleState extends State<ButtonsSectionToggle> {
     );
   }
 
-  void navigationToQuiz(BuildContext context) {
+  void navigationToQuiz(BuildContext parentContext) {
     if (toggleKey.currentState!.validate()) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => StudentView(
-            quizCode: quizCodeController.text,
-          ),
-        ),
-      );
+      BlocProvider.of<StudentCubit>(parentContext)
+          .getQuizQuestions(quizCode: quizCodeController.text);
     } else {
       autovalidateMode = AutovalidateMode.disabled;
       setState(() {});

@@ -6,7 +6,7 @@ part 'student_state.dart';
 
 class StudentCubit extends Cubit<StudentState> {
   StudentCubit() : super(StudentInitial());
-  List<Map<String, dynamic>>? questions;
+
   Future<void> getQuizQuestions({required String quizCode}) async {
     emit(StudentCubitGetQuizQuestionsLoading());
     try {
@@ -18,9 +18,10 @@ class StudentCubit extends Cubit<StudentState> {
       if (documentSnapshot.exists) {
         Map<String, dynamic>? data = documentSnapshot.data();
         if (data != null) {
-          questions = List<Map<String, dynamic>>.from(data['questions']);
+          List<Map<String, dynamic>> questions =
+              List<Map<String, dynamic>>.from(data['questions']);
           print(questions);
-          emit(StudentCubitGetQuizQuestionsSuccess());
+          emit(StudentCubitGetQuizQuestionsSuccess(questions: questions));
         } else {
           emit(StudentCubitGetQuizQuestionsFailure(
               error: 'No data found for the provided quiz code.'));

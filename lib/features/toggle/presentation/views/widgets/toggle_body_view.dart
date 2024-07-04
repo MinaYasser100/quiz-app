@@ -8,12 +8,14 @@ class ToggleBodyView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: [
-        ImageSectionToggle(),
-        ButtonsSectionToggle(),
-      ],
+    return const SingleChildScrollView(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          ImageSectionToggle(),
+          ButtonsSectionToggle(),
+        ],
+      ),
     );
   }
 }
