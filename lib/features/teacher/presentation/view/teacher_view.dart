@@ -9,7 +9,7 @@ class TeacherView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: teacherAppBar(),
+      appBar: teacherAppBar(context),
       body: const TeacherBodyView(),
     );
   }

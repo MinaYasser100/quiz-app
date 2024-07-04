@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:quiz_app/core/constant/app_color.dart';
+import 'package:quiz_app/features/teacher/presentation/view/widgets/all_quizs_view.dart';
 
-AppBar teacherAppBar() {
+AppBar teacherAppBar(BuildContext context) {
   return AppBar(
     foregroundColor: AppColor.secondColor,
     title: const Text(
@@ -17,7 +18,14 @@ AppBar teacherAppBar() {
       Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10),
         child: IconButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const AllQuizsView(),
+              ),
+            );
+          },
           icon: const Icon(Icons.quiz_outlined),
         ),
       ),
