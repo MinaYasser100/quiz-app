@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quiz_app/features/teacher/presentation/view/func/copy_quiz_id_show_dialog.dart';
+import 'package:quiz_app/features/teacher/presentation/view/func/store_quiz_ids_in_hive.dart';
 import '../view/func/custom_error_create_answer_show_dialog.dart';
 import '../view/widgets/custom_question_widget.dart';
 
@@ -79,6 +80,7 @@ class AddNewQuestionCubit extends Cubit<AddNewQuestionStates> {
               .collection('questions')
               .add({'questions': questionData});
           String quizID = docRef.id;
+          await storeQuizIdsInHive(quizID);
           await copyQuizIdShowDialog(context, quizID);
         } catch (e) {
           errorScaffoldMessenger(context, e);

@@ -13,5 +13,14 @@ AppBar teacherAppBar() {
     centerTitle: true,
     shadowColor: AppColor.secondColor,
     elevation: 0.7,
+    actions: [
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10),
+        child: IconButton(
+          onPressed: () {},
+          icon: const Icon(Icons.quiz_outlined),
+        ),
+      ),
+    ],
   );
 }
