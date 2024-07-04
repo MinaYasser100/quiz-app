@@ -4,8 +4,8 @@ import 'package:quiz_app/features/student/presentation/views/widgets/student_bod
 import 'func/student_app_bar.dart';
 
 class StudentView extends StatelessWidget {
-  const StudentView({super.key});
-
+  const StudentView({super.key, required this.quizCode});
+  final String quizCode;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
