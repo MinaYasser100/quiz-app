@@ -8,7 +8,7 @@ final class StudentInitial extends StudentState {}
 final class StudentCubitGetQuizQuestionsLoading extends StudentState {}
 
 final class StudentCubitGetQuizQuestionsSuccess extends StudentState {
-  final List<Map<String, dynamic>> questions;
+  final List<QuestionModel> questions;
 
   StudentCubitGetQuizQuestionsSuccess({required this.questions});
 }

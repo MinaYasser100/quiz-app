@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:quiz_app/core/constant/app_color.dart';
 import 'package:quiz_app/core/constant/constant.dart';
