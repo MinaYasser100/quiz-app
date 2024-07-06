@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quiz_app/core/widgets/custom_button_widget.dart';
-import 'package:quiz_app/features/student/presentation/manager/cubit/student_cubit.dart';
+import 'package:quiz_app/features/student/presentation/manager/student_cubit/student_cubit.dart';
 import 'package:quiz_app/features/student/presentation/views/student_view.dart';
 import 'package:quiz_app/features/teacher/presentation/view/widgets/custom_text_from_field.dart';
 
