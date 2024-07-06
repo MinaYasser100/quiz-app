@@ -16,7 +16,10 @@ class CustomQuizQuestionsSliverList extends StatelessWidget {
       delegate: SliverChildBuilderDelegate(
         (context, index) => Padding(
           padding: const EdgeInsets.all(20.0),
-          child: CustomStudentQuestionItemWidget(question: questions[index]),
+          child: CustomStudentQuestionItemWidget(
+            question: questions[index],
+            questionIdex: index,
+          ),
         ),
         childCount: questions.length,
       ),

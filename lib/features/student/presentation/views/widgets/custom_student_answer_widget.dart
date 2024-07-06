@@ -7,10 +7,12 @@ class CustomStudentAnswerWidget extends StatelessWidget {
     required this.isLast,
     required this.answerText,
     this.isSelect = false,
+    required this.onSelect,
   });
   final bool isLast;
   final String answerText;
   final bool isSelect;
+  final VoidCallback onSelect;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -24,7 +26,7 @@ class CustomStudentAnswerWidget extends StatelessWidget {
                     : Icons.radio_button_unchecked,
                 color: AppColor.primaryColor,
               ),
-              onPressed: () {},
+              onPressed: onSelect,
             ),
             const SizedBox(
               width: 10,
