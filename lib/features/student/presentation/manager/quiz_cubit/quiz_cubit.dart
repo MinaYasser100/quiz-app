@@ -9,10 +9,27 @@ class QuizCubit extends Cubit<QuizState> {
   }
 
   void onSelect({required int questionIndex, required int answerIndex}) {
-    final currentSelect = state as QuizLoaded;
-    final updateSelectedAnswer =
-        Map<int, int>.from(currentSelect.selectedAnswers);
-    updateSelectedAnswer[questionIndex] = answerIndex;
-    emit(currentSelect.copyWith(selectedAnswers: updateSelectedAnswer));
+    if (state is QuizLoaded) {
+      final currentSelect = state as QuizLoaded;
+      final updateSelectedAnswer =
+          Map<int, int>.from(currentSelect.selectedAnswers);
+      updateSelectedAnswer[questionIndex] = answerIndex;
+      emit(currentSelect.copyWith(selectedAnswers: updateSelectedAnswer));
+    }
+  }
+
+  int calculateStudentResult() {
+    if (state is QuizLoaded) {
+      final currentState = state as QuizLoaded;
+      int correct = 0;
+      currentState.selectedAnswers.forEach((questionIndex, answerIndex) {
+        if (currentState.questions[questionIndex].correctAnswer ==
+            answerIndex) {
+          correct++;
+        }
+      });
+      return correct;
+    }
+    return 0;
   }
 }

@@ -23,10 +23,14 @@ class StudentBodyView extends StatelessWidget {
             hasScrollBody: false,
             child: Column(
               children: [
-                CustomButtonWidget(
-                  text: 'Submit',
-                  onPressed: () {},
-                ),
+                BlocBuilder<QuizCubit, QuizState>(builder: (context, state) {
+                  return CustomButtonWidget(
+                    text: 'Submit',
+                    onPressed: () {
+                      print(context.read<QuizCubit>().calculateStudentResult());
+                    },
+                  );
+                }),
                 const SizedBox(
                   height: 20,
                 ),

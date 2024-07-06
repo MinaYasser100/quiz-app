@@ -33,6 +33,7 @@ class _ButtonsSectionToggleState extends State<ButtonsSectionToggle> {
       child: BlocConsumer<StudentCubit, StudentState>(
         listener: (context, state) {
           if (state is StudentCubitGetQuizQuestionsSuccess) {
+            quizCodeController.clear();
             Navigator.push(
               context,
               MaterialPageRoute(
@@ -134,6 +135,7 @@ class _ButtonsSectionToggleState extends State<ButtonsSectionToggle> {
     if (toggleKey.currentState!.validate()) {
       BlocProvider.of<StudentCubit>(parentContext)
           .getQuizQuestions(quizCode: quizCodeController.text);
+      Navigator.pop(context);
     } else {
       autovalidateMode = AutovalidateMode.disabled;
       setState(() {});
