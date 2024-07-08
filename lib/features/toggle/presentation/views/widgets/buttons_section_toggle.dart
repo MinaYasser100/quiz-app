@@ -33,7 +33,6 @@ class _ButtonsSectionToggleState extends State<ButtonsSectionToggle> {
       child: BlocConsumer<StudentCubit, StudentState>(
         listener: (context, state) {
           if (state is StudentCubitGetQuizQuestionsSuccess) {
-            quizCodeController.clear();
             Navigator.push(
               context,
               MaterialPageRoute(

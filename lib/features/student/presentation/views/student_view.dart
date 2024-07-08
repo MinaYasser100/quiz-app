@@ -11,9 +11,12 @@ class StudentView extends StatelessWidget {
   final List<QuestionModel> questions;
   @override
   Widget build(BuildContext context) {
+    print('------------------------------------');
+    print(quizCode);
     return Scaffold(
       appBar: studentAppBar(),
       body: StudentBodyView(
+        quizCode: quizCode,
         questions: questions,
       ),
     );
