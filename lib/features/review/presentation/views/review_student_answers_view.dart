@@ -10,8 +10,17 @@ class ReviewStudentAnswersView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
-      body: const ReviewStudentAnswersBodyView(),
+      appBar: AppBar(
+        title: const Text(
+          'Review Your Answers',
+          style: TextStyle(fontWeight: FontWeight.w600),
+        ),
+        centerTitle: true,
+        elevation: 0.5,
+      ),
+      body: ReviewStudentAnswersBodyView(
+        studentResponseModel: studentResponseModel,
+      ),
     );
   }
 }
