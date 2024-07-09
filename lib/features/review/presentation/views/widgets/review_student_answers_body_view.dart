@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:quiz_app/features/review/presentation/views/widgets/custom_review_question_widget.dart';
 import 'package:quiz_app/features/student/data/model/student_response_model.dart';
+
+import 'custom_back_to_toggle_view.dart';
+import 'custom_review_info_widget.dart';
+import 'custom_review_question_sliver_list.dart';
 
 class ReviewStudentAnswersBodyView extends StatelessWidget {
   const ReviewStudentAnswersBodyView(
@@ -10,20 +13,18 @@ class ReviewStudentAnswersBodyView extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomScrollView(
       slivers: [
-        SliverList(
-          delegate: SliverChildBuilderDelegate(
-            (context, index) => Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: CustomReviewQuestionWidget(
-                  question: studentResponseModel.questions[index].question,
-                  answers: studentResponseModel.questions[index].answers,
-                  correctAnswer:
-                      studentResponseModel.questions[index].correctAnswer,
-                  studentAnswer: studentResponseModel.selectedAnswers[index]!,
-                )),
-            childCount: studentResponseModel.questions.length,
+        SliverToBoxAdapter(
+          child: CustomReviewInfoWidget(
+            studentResponseModel: studentResponseModel,
           ),
-        )
+        ),
+        CustomReviewQuestionSliverList(
+          studentResponseModel: studentResponseModel,
+        ),
+        const SliverFillRemaining(
+          hasScrollBody: false,
+          child: CustomBackToToggleView(),
+        ),
       ],
     );
   }
