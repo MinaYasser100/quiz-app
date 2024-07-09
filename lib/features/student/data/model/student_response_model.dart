@@ -25,4 +25,16 @@ class StudentResponseModel {
       'result': result,
     };
   }
+
+  factory StudentResponseModel.fromMap(Map<String, dynamic> map) {
+    return StudentResponseModel(
+      name: map['name'],
+      section: map['section'],
+      selectedAnswers: Map<int, int>.from(map['selected_answers']
+          .map((key, value) => MapEntry(int.parse(key), value))),
+      questions: List<QuestionModel>.from(
+          map['questions'].map((question) => QuestionModel.fromMap(question))),
+      result: map['result'],
+    );
+  }
 }
