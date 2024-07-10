@@ -57,6 +57,8 @@ class QuizCubit extends Cubit<QuizState> {
         FirebaseFirestore.instance
             .collection('StudentAnswers')
             .doc(quizCode)
+            .collection('students')
+            .doc(studentResponseModel.name)
             .collection(studentResponseModel.name)
             .add(studentResponseModel.toMap());
         emit(currentState);
