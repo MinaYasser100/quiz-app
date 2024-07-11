@@ -1,31 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:quiz_app/features/student/data/model/student_response_model.dart';
 
 class StudentResultForTeacher extends StatelessWidget {
   const StudentResultForTeacher({
     super.key,
+    required this.studentResponseModel,
   });
-
+  final StudentResponseModel studentResponseModel;
   @override
   Widget build(BuildContext context) {
-    return const ListTile(
-      leading: Icon(
+    return ListTile(
+      leading: const Icon(
         Icons.bookmark_sharp,
         size: 30,
+        color: Colors.lime,
       ),
       title: FittedBox(
         fit: BoxFit.scaleDown,
         alignment: Alignment.topLeft,
         child: Text(
-          'Mina Yasser Shiker',
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+          studentResponseModel.name,
+          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
         ),
       ),
       subtitle: Text(
-        'Section : 5',
+        'Section : ${studentResponseModel.section}',
       ),
       trailing: Text(
-        '5/5',
-        style: TextStyle(fontSize: 20),
+        '${studentResponseModel.result} / ${studentResponseModel.questions.length}',
+        style: const TextStyle(fontSize: 20),
       ),
     );
   }

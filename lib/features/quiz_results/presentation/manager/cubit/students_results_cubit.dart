@@ -9,24 +9,24 @@ part 'students_results_state.dart';
 class StudentsResultsCubit extends Cubit<StudentsResultsState> {
   StudentsResultsCubit(this.quizResultsRepo) : super(StudentsResultsInitial());
   final QuizResultsRepo quizResultsRepo;
-  Future<void> getAllStudentResponses({
+  int numberOfStudents = 0;
+  Future<void> fetchStudentResponsesFirebase({
     required String quizCode,
   }) async {
+    emit(StudentsResultsLoading());
     try {
-      // Reference to the students' collection for the specified quiz
-      final studentsCollectionRef = FirebaseFirestore.instance
-          .collection('StudentAnswers')
-          .doc(quizCode)
-          .collection('students');
+      QuerySnapshot studentSnapshots =
+          await quizResultsRepo.fetchStudentsData(quizCode: quizCode);
 
-      // Fetch the student documents from the collection
-      final querySnapshot = await studentsCollectionRef.get();
-
-      // The size property gives the number of documents in the collection
-      print(querySnapshot.docs);
+      List<StudentResponseModel> studentResponses = studentSnapshots.docs
+          .map((doc) =>
+              StudentResponseModel.fromMap(doc.data() as Map<String, dynamic>))
+          .toList();
+      numberOfStudents = studentResponses.length;
+      emit(StudentsResultsSuccess(studentResponses: studentResponses));
     } catch (e) {
-      print('Error fetching student responses: $e');
-      throw Exception('Failed to fetch student responses');
+      // Handle errors, e.g., show a message to the user
+      emit(StudentsResultsError(errorMessage: e.toString()));
     }
   }
 }

@@ -10,11 +10,11 @@ class StudentsResultsLoading extends StudentsResultsState {}
 class StudentsResultsSuccess extends StudentsResultsState {
   final List<StudentResponseModel> studentResponses;
 
-  StudentsResultsSuccess(this.studentResponses);
+  StudentsResultsSuccess({required this.studentResponses});
 }
 
 class StudentsResultsError extends StudentsResultsState {
   final String errorMessage;
 
-  StudentsResultsError(this.errorMessage);
+  StudentsResultsError({required this.errorMessage});
 }

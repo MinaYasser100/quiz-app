@@ -11,11 +11,33 @@ class QuizResultBodyView extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<StudentsResultsCubit, StudentsResultsState>(
       builder: (context, state) {
-        return const Column(
-          children: [
-            StudentResultListViewTeacher(),
-          ],
-        );
+        if (state is StudentsResultsLoading) {
+          return const Center(
+            child: CircularProgressIndicator(
+              color: Colors.black,
+            ),
+          );
+        } else if (state is StudentsResultsSuccess) {
+          return Column(
+            children: [
+              StudentResultListViewTeacher(
+                studentResponseModel: state.studentResponses,
+              ),
+            ],
+          );
+        } else {
+          return const Center(
+            child: Text(
+              'An Error ocurred while downloading',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Colors.red,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          );
+        }
       },
     );
   }

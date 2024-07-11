@@ -58,8 +58,6 @@ class QuizCubit extends Cubit<QuizState> {
             .collection('StudentAnswers')
             .doc(quizCode)
             .collection('students')
-            .doc(studentResponseModel.name)
-            .collection(studentResponseModel.name)
             .add(studentResponseModel.toMap());
         emit(currentState);
       } catch (e) {

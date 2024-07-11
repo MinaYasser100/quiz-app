@@ -4,24 +4,13 @@ import 'quiz_results_repo.dart';
 
 class QuizResultsImplRepo implements QuizResultsRepo {
   @override
-  Future<QuerySnapshot<Object?>> fetchStudentDocuments(
+  Future<QuerySnapshot<Object?>> fetchStudentsData(
       {required String quizCode}) async {
-    CollectionReference studentsRef = FirebaseFirestore.instance
+    QuerySnapshot studentSnapshots = await FirebaseFirestore.instance
         .collection('StudentAnswers')
         .doc(quizCode)
-        .collection('students');
-    QuerySnapshot studentDocs = await studentsRef.get();
-    return studentDocs;
-  }
-
-  @override
-  Future<QuerySnapshot<Object?>> fetchStudentsResponsesDoc(
-      {required String quizCode, required String studentName}) async {
-    CollectionReference studentCollection = FirebaseFirestore.instance
-        .collection('StudentAnswers')
-        .doc(quizCode)
-        .collection('students');
-    QuerySnapshot studentsResponsesDoc = await studentCollection.get();
-    return studentsResponsesDoc;
+        .collection('students')
+        .get();
+    return studentSnapshots;
   }
 }
