@@ -62,7 +62,6 @@ class QuizCubit extends Cubit<QuizState> {
         emit(currentState);
       } catch (e) {
         errorScaffoldMessenger(context, e);
-        print(e.toString());
       }
     }
   }

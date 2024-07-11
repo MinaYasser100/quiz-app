@@ -53,27 +53,38 @@ class AddNewQuestionCubit extends Cubit<AddNewQuestionStates> {
   Future<void> collectAndUploadData(BuildContext context) async {
     if (state is AddNewQuestionCubitLoaded) {
       final currentState = state as AddNewQuestionCubitLoaded;
-      final questionData =
-          List<CustomQuestionWidget>.from(currentState.questions)
-              .map((widget) {
-                final questionText = widget.questionController.text;
-                final answers = widget.answerControllers
-                    .map((controller) => controller.text)
-                    .toList();
-                final nonEmptyAnswers =
-                    answers.where((answer) => answer.isNotEmpty).toList();
-                if (nonEmptyAnswers.length < 2) {
-                  customErrorCreateAnswerShowDialog(context);
-                  return null;
-                }
-                return {
-                  'question': questionText,
-                  'answers': answers,
-                  'correct_answer': widget.selectedAnswerIndex,
-                };
-              })
-              .where((element) => element != null)
-              .toList();
+      final List<Map<String, dynamic>> questionData = [];
+
+      for (var widget in currentState.questions) {
+        final questionWidget =
+            widget as CustomQuestionWidget; // Cast to CustomQuestionWidget
+        final questionText = questionWidget.questionController.text;
+
+        if (questionText.isEmpty) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Question text cannot be empty.')),
+          );
+          return;
+        }
+
+        final answers = questionWidget.answerControllers
+            .map((controller) => controller.text)
+            .toList();
+        final nonEmptyAnswers =
+            answers.where((answer) => answer.isNotEmpty).toList();
+
+        if (nonEmptyAnswers.length < 2) {
+          customErrorCreateAnswerShowDialog(context);
+          return;
+        }
+
+        questionData.add({
+          'question': questionText,
+          'answers': answers,
+          'correct_answer': questionWidget.selectedAnswerIndex,
+        });
+      }
+
       if (questionData.isNotEmpty) {
         try {
           DocumentReference docRef = await FirebaseFirestore.instance
@@ -82,6 +93,9 @@ class AddNewQuestionCubit extends Cubit<AddNewQuestionStates> {
           String quizID = docRef.id;
           await storeQuizIdsInHive(quizID);
           await copyQuizIdShowDialog(context, quizID);
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Data uploaded successfully')),
+          );
         } catch (e) {
           errorScaffoldMessenger(context, e);
         }

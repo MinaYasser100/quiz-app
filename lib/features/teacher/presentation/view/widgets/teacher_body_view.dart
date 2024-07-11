@@ -37,9 +37,6 @@ class TeacherBodyView extends StatelessWidget {
                           await context
                               .read<AddNewQuestionCubit>()
                               .collectAndUploadData(context);
-                          ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                  content: Text('Data uploaded successfully')));
                         } catch (e) {
                           ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(content: Text(e.toString())));

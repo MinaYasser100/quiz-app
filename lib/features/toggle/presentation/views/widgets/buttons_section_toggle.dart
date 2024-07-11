@@ -43,6 +43,11 @@ class _ButtonsSectionToggleState extends State<ButtonsSectionToggle> {
               ),
             );
           }
+          if (state is StudentCubitGetQuizQuestionsFailure) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text(state.error)),
+            );
+          }
         },
         builder: (context, state) {
           return Column(

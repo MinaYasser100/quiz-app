@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quiz_app/core/constant/app_color.dart';
 import 'package:quiz_app/features/student/presentation/manager/quiz_cubit/quiz_cubit.dart';
 import 'package:quiz_app/features/student/presentation/views/func/name_validator.dart';
+import 'package:quiz_app/features/student/presentation/views/func/validate_number.dart';
 import 'package:quiz_app/features/teacher/presentation/view/widgets/custom_text_from_field.dart';
 
 class CustomStudentInfoViewWidget extends StatelessWidget {
@@ -38,12 +39,7 @@ class CustomStudentInfoViewWidget extends StatelessWidget {
             labelText: 'Your Section',
             controller: sectionController,
             color: AppColor.primaryColor,
-            validator: (p0) {
-              if (p0!.isEmpty) {
-                return 'Please enter your section';
-              }
-              return null;
-            },
+            validator: validateNumeric,
           ),
         ],
       ),

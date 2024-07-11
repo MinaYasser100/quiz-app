@@ -23,7 +23,6 @@ class StudentCubit extends Cubit<StudentState> {
               .map((questionData) =>
                   QuestionModel.fromMap(questionData as Map<String, dynamic>))
               .toList();
-          print(questions);
           emit(StudentCubitGetQuizQuestionsSuccess(questions: questions));
         } else {
           emit(StudentCubitGetQuizQuestionsFailure(
