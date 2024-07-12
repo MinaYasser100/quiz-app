@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:quiz_app/core/constant/app_color.dart';
 import 'package:quiz_app/features/teacher/presentation/manager/add_new_question_cubit.dart';
 
 import 'teahcer_button_section_body.dart';
@@ -31,18 +32,24 @@ class TeacherBodyView extends StatelessWidget {
                   ),
                   SliverFillRemaining(
                     hasScrollBody: false,
-                    child: TeacherButtonSectionBody(
-                      onFinish: () async {
-                        try {
-                          await context
-                              .read<AddNewQuestionCubit>()
-                              .collectAndUploadData(context);
-                        } catch (e) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text(e.toString())));
-                        }
-                      },
-                    ),
+                    child: state.isLoading
+                        ? const Center(
+                            child: CircularProgressIndicator(
+                              color: AppColor.secondColor,
+                            ),
+                          )
+                        : TeacherButtonSectionBody(
+                            onFinish: () async {
+                              try {
+                                await context
+                                    .read<AddNewQuestionCubit>()
+                                    .collectAndUploadData(context);
+                              } catch (e) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(content: Text(e.toString())));
+                              }
+                            },
+                          ),
                   ),
                 ],
               ),

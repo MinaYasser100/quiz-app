@@ -5,7 +5,8 @@ abstract class AddNewQuestionStates {}
 final class AddNewQuestionInitial extends AddNewQuestionStates {}
 
 final class AddNewQuestionCubitLoaded extends AddNewQuestionStates {
-  final List<Widget> questions;
+  final List<CustomQuestionWidget> questions;
+  final bool isLoading;
 
-  AddNewQuestionCubitLoaded(this.questions);
+  AddNewQuestionCubitLoaded(this.questions, {required this.isLoading});
 }

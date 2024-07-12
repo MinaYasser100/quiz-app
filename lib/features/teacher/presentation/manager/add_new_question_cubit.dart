@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quiz_app/features/teacher/presentation/view/func/copy_quiz_id_show_dialog.dart';
 import 'package:quiz_app/features/teacher/presentation/view/func/store_quiz_ids_in_hive.dart';
+import '../view/func/correct_answer_show_dialog.dart';
 import '../view/func/custom_error_create_answer_show_dialog.dart';
 import '../view/widgets/custom_question_widget.dart';
 
@@ -10,7 +11,8 @@ part 'add_new_question_states.dart';
 
 class AddNewQuestionCubit extends Cubit<AddNewQuestionStates> {
   AddNewQuestionCubit() : super(AddNewQuestionInitial()) {
-    emit(AddNewQuestionCubitLoaded([createQuestionWidget(0)]));
+    emit(
+        AddNewQuestionCubitLoaded([createQuestionWidget(0)], isLoading: false));
   }
 
   CustomQuestionWidget createQuestionWidget(int index) {
@@ -32,7 +34,8 @@ class AddNewQuestionCubit extends Cubit<AddNewQuestionStates> {
       final newQuestions =
           List<CustomQuestionWidget>.from(currentState.questions);
       newQuestions.add(createQuestionWidget(newQuestions.length));
-      emit(AddNewQuestionCubitLoaded(newQuestions));
+      emit(AddNewQuestionCubitLoaded(newQuestions,
+          isLoading: currentState.isLoading));
     }
   }
 
@@ -42,28 +45,30 @@ class AddNewQuestionCubit extends Cubit<AddNewQuestionStates> {
       final newQuestions =
           List<CustomQuestionWidget>.from(currentState.questions);
       newQuestions.removeAt(index);
-      // Update indices
       for (int i = 0; i < newQuestions.length; i++) {
         newQuestions[i] = newQuestions[i].copyWith(index: i);
       }
-      emit(AddNewQuestionCubitLoaded(newQuestions));
+      emit(AddNewQuestionCubitLoaded(newQuestions,
+          isLoading: currentState.isLoading));
     }
   }
 
   Future<void> collectAndUploadData(BuildContext context) async {
     if (state is AddNewQuestionCubitLoaded) {
       final currentState = state as AddNewQuestionCubitLoaded;
+      emit(AddNewQuestionCubitLoaded(currentState.questions, isLoading: true));
       final List<Map<String, dynamic>> questionData = [];
 
       for (var widget in currentState.questions) {
-        final questionWidget =
-            widget as CustomQuestionWidget; // Cast to CustomQuestionWidget
+        final questionWidget = widget;
         final questionText = questionWidget.questionController.text;
 
         if (questionText.isEmpty) {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text('Question text cannot be empty.')),
           );
+          emit(AddNewQuestionCubitLoaded(currentState.questions,
+              isLoading: false));
           return;
         }
 
@@ -75,9 +80,16 @@ class AddNewQuestionCubit extends Cubit<AddNewQuestionStates> {
 
         if (nonEmptyAnswers.length < 2) {
           customErrorCreateAnswerShowDialog(context);
+          emit(AddNewQuestionCubitLoaded(currentState.questions,
+              isLoading: false));
           return;
         }
-
+        if (questionWidget.selectedAnswerIndex == -1) {
+          correctAnswerShowDialog(context);
+          emit(AddNewQuestionCubitLoaded(currentState.questions,
+              isLoading: false));
+          return;
+        }
         questionData.add({
           'question': questionText,
           'answers': answers,
@@ -100,6 +112,7 @@ class AddNewQuestionCubit extends Cubit<AddNewQuestionStates> {
           errorScaffoldMessenger(context, e);
         }
       }
+      emit(AddNewQuestionCubitLoaded(currentState.questions, isLoading: false));
     }
   }
 
@@ -119,7 +132,8 @@ class AddNewQuestionCubit extends Cubit<AddNewQuestionStates> {
       final updatedQuestion = updatedQuestions[questionIndex]
           .copyWith(selectedAnswerIndex: answerIndex);
       updatedQuestions[questionIndex] = updatedQuestion;
-      emit(AddNewQuestionCubitLoaded(updatedQuestions));
+      emit(AddNewQuestionCubitLoaded(updatedQuestions,
+          isLoading: currentState.isLoading));
     }
   }
 }
