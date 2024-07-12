@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quiz_app/features/quiz_results/presentation/manager/cubit/students_results_cubit.dart';
 
+import 'error_download_data.dart';
 import 'student_result_list_view_teacher.dart';
+import 'no_student_widget.dart';
 
 class QuizResultBodyView extends StatelessWidget {
   const QuizResultBodyView({super.key, required this.quizCode});
@@ -19,24 +21,17 @@ class QuizResultBodyView extends StatelessWidget {
           );
         } else if (state is StudentsResultsSuccess) {
           return Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              StudentResultListViewTeacher(
-                studentResponseModel: state.studentResponses,
-              ),
+              if (state.studentResponses.isNotEmpty)
+                StudentResultListViewTeacher(
+                  studentResponseModel: state.studentResponses,
+                ),
+              if (state.studentResponses.isEmpty) const NoStudentWidget(),
             ],
           );
         } else {
-          return const Center(
-            child: Text(
-              'An Error ocurred while downloading',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: Colors.red,
-              ),
-              textAlign: TextAlign.center,
-            ),
-          );
+          return const ErrorDownloadData();
         }
       },
     );
