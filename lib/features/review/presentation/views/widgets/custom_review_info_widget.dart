@@ -6,8 +6,9 @@ class CustomReviewInfoWidget extends StatelessWidget {
   const CustomReviewInfoWidget({
     super.key,
     required this.studentResponseModel,
+    this.isTeacher = false,
   });
-
+  final bool isTeacher;
   final StudentResponseModel studentResponseModel;
 
   @override
@@ -17,7 +18,7 @@ class CustomReviewInfoWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text('Your Name : '),
+          Text(isTeacher ? 'Student Name : ' : 'Your Name : '),
           const SizedBox(
             height: 10,
           ),
@@ -30,7 +31,7 @@ class CustomReviewInfoWidget extends StatelessWidget {
           const SizedBox(
             height: 20,
           ),
-          const Text('Your Section : '),
+          Text(isTeacher ? 'Student Section : ' : 'Your Section : '),
           const SizedBox(
             height: 10,
           ),
@@ -40,7 +41,7 @@ class CustomReviewInfoWidget extends StatelessWidget {
               fontSize: 20,
             ),
           ),
-          const Text('Your Result : '),
+          Text(isTeacher ? 'Student Result : ' : 'Your Result : '),
           const SizedBox(
             height: 10,
           ),

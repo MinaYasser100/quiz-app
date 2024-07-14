@@ -16,14 +16,14 @@ class CustomReviewQuestionSliverList extends StatelessWidget {
     return SliverList(
       delegate: SliverChildBuilderDelegate(
         (context, index) => Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: CustomReviewQuestionWidget(
-              question: studentResponseModel.questions[index].question,
-              answers: studentResponseModel.questions[index].answers,
-              correctAnswer:
-                  studentResponseModel.questions[index].correctAnswer,
-              studentAnswer: studentResponseModel.selectedAnswers[index]!,
-            )),
+          padding: const EdgeInsets.all(20.0),
+          child: CustomReviewQuestionWidget(
+            question: studentResponseModel.questions[index].question,
+            answers: studentResponseModel.questions[index].answers,
+            correctAnswer: studentResponseModel.questions[index].correctAnswer,
+            studentAnswer: studentResponseModel.selectedAnswers[index]!,
+          ),
+        ),
         childCount: studentResponseModel.questions.length,
       ),
     );
