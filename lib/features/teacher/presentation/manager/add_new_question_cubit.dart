@@ -3,13 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quiz_app/features/teacher/presentation/view/func/copy_quiz_id_show_dialog.dart';
 import 'package:quiz_app/features/teacher/presentation/view/func/store_quiz_ids_in_hive.dart';
-import '../view/func/correct_answer_show_dialog.dart';
+import '../view/func/custom_show_dialog.dart';
 import '../view/func/custom_error_create_answer_show_dialog.dart';
 import '../view/widgets/custom_question_widget.dart';
 
 part 'add_new_question_states.dart';
 
 class AddNewQuestionCubit extends Cubit<AddNewQuestionStates> {
+  final TextEditingController titleController = TextEditingController();
   AddNewQuestionCubit() : super(AddNewQuestionInitial()) {
     emit(
         AddNewQuestionCubitLoaded([createQuestionWidget(0)], isLoading: false));
@@ -57,8 +58,15 @@ class AddNewQuestionCubit extends Cubit<AddNewQuestionStates> {
     if (state is AddNewQuestionCubitLoaded) {
       final currentState = state as AddNewQuestionCubitLoaded;
       emit(AddNewQuestionCubitLoaded(currentState.questions, isLoading: true));
+      final title = titleController.text;
       final List<Map<String, dynamic>> questionData = [];
-
+      if (title.isEmpty) {
+        customShowDialog(
+          context: context,
+          title: 'Quiz Title',
+          contentText: 'Please enter the quiz title to you can upload the quiz',
+        );
+      }
       for (var widget in currentState.questions) {
         final questionWidget = widget;
         final questionText = questionWidget.questionController.text;
@@ -85,7 +93,11 @@ class AddNewQuestionCubit extends Cubit<AddNewQuestionStates> {
           return;
         }
         if (questionWidget.selectedAnswerIndex == -1) {
-          correctAnswerShowDialog(context);
+          customShowDialog(
+            context: context,
+            title: 'Select Correct Answer',
+            contentText: 'Please select the correct answer for each question.',
+          );
           emit(AddNewQuestionCubitLoaded(currentState.questions,
               isLoading: false));
           return;
@@ -101,7 +113,7 @@ class AddNewQuestionCubit extends Cubit<AddNewQuestionStates> {
         try {
           DocumentReference docRef = await FirebaseFirestore.instance
               .collection('questions')
-              .add({'questions': questionData});
+              .add({'title': title, 'questions': questionData});
           String quizID = docRef.id;
           await storeQuizIdsInHive(quizID);
           await copyQuizIdShowDialog(context, quizID);

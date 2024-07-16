@@ -8,9 +8,9 @@ final class StudentInitial extends StudentState {}
 final class StudentCubitGetQuizQuestionsLoading extends StudentState {}
 
 final class StudentCubitGetQuizQuestionsSuccess extends StudentState {
-  final List<QuestionModel> questions;
+  final QuizModel quizModel;
 
-  StudentCubitGetQuizQuestionsSuccess({required this.questions});
+  StudentCubitGetQuizQuestionsSuccess({required this.quizModel});
 }
 
 final class StudentCubitGetQuizQuestionsFailure extends StudentState {

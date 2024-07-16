@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:quiz_app/core/constant/app_color.dart';
 
-AppBar studentAppBar() {
+AppBar studentAppBar({required String title}) {
   return AppBar(
     foregroundColor: AppColor.primaryColor,
-    title: const Text(
-      'Quiz',
-      style: TextStyle(
+    title: Text(
+      title,
+      style: const TextStyle(
         fontWeight: FontWeight.w600,
       ),
     ),

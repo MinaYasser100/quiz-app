@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quiz_app/core/constant/app_color.dart';
 import 'package:quiz_app/features/teacher/presentation/manager/add_new_question_cubit.dart';
+import 'package:quiz_app/features/teacher/presentation/view/widgets/custom_text_from_field.dart';
 
 import 'teahcer_button_section_body.dart';
 
@@ -19,6 +20,17 @@ class TeacherBodyView extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: 0),
               child: CustomScrollView(
                 slivers: [
+                  SliverToBoxAdapter(
+                    child: Padding(
+                      padding: const EdgeInsets.all(20),
+                      child: CustomTextFromField(
+                          controller: context
+                              .read<AddNewQuestionCubit>()
+                              .titleController,
+                          labelText: 'Quiz Title',
+                          color: AppColor.secondColor),
+                    ),
+                  ),
                   SliverList(
                     delegate: SliverChildBuilderDelegate(
                       (context, index) {

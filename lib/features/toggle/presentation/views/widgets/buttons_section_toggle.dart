@@ -38,7 +38,7 @@ class _ButtonsSectionToggleState extends State<ButtonsSectionToggle> {
               MaterialPageRoute(
                 builder: (context) => StudentView(
                   quizCode: quizCodeController.text,
-                  questions: state.questions,
+                  quizModel: state.quizModel,
                 ),
               ),
             );

@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:quiz_app/features/toggle/data/model/question_model.dart';
+import 'package:quiz_app/features/student/data/model/quiz_model.dart';
 
 part 'student_state.dart';
 
@@ -19,11 +19,8 @@ class StudentCubit extends Cubit<StudentState> {
       if (documentSnapshot.exists) {
         Map<String, dynamic>? data = documentSnapshot.data();
         if (data != null) {
-          List<QuestionModel> questions = (data['questions'] as List)
-              .map((questionData) =>
-                  QuestionModel.fromMap(questionData as Map<String, dynamic>))
-              .toList();
-          emit(StudentCubitGetQuizQuestionsSuccess(questions: questions));
+          QuizModel quizModel = QuizModel.fromMap(data);
+          emit(StudentCubitGetQuizQuestionsSuccess(quizModel: quizModel));
         } else {
           emit(StudentCubitGetQuizQuestionsFailure(
               error: 'No data found for the provided quiz code.'));
