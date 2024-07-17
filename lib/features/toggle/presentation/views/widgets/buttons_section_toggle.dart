@@ -68,7 +68,7 @@ class _ButtonsSectionToggleState extends State<ButtonsSectionToggle> {
               ),
               CustomButtonWidget(
                 onPressed: () {
-                  quizCodeShowDialog(context);
+                  _quizCodeShowDialog(context);
                 },
                 text: 'Student',
               ),
@@ -82,7 +82,7 @@ class _ButtonsSectionToggleState extends State<ButtonsSectionToggle> {
     );
   }
 
-  Future<dynamic> quizCodeShowDialog(BuildContext parentContext) {
+  Future<dynamic> _quizCodeShowDialog(BuildContext parentContext) {
     return showDialog(
       context: parentContext,
       builder: (context) => AlertDialog(
@@ -112,7 +112,7 @@ class _ButtonsSectionToggleState extends State<ButtonsSectionToggle> {
         actions: [
           TextButton(
             onPressed: () {
-              navigationToQuiz(parentContext);
+              _navigationToQuiz(parentContext);
             },
             child: const Text(
               'OK',
@@ -135,7 +135,7 @@ class _ButtonsSectionToggleState extends State<ButtonsSectionToggle> {
     );
   }
 
-  void navigationToQuiz(BuildContext parentContext) {
+  void _navigationToQuiz(BuildContext parentContext) {
     if (toggleKey.currentState!.validate()) {
       BlocProvider.of<StudentCubit>(parentContext)
           .getQuizQuestions(quizCode: quizCodeController.text);

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:quiz_app/core/constant/app_color.dart';
 
-AppBar studentAppBar({required String title}) {
+AppBar studentAppBar({required String title, required String time}) {
   return AppBar(
     foregroundColor: AppColor.primaryColor,
     title: Text(
@@ -13,5 +13,13 @@ AppBar studentAppBar({required String title}) {
     centerTitle: true,
     shadowColor: AppColor.primaryColor,
     elevation: 0.7,
+    actions: [
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10),
+        child: Text(
+          time,
+        ),
+      ),
+    ],
   );
 }
