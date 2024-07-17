@@ -9,16 +9,19 @@ class CustomTextFromField extends StatelessWidget {
     required this.color,
     this.validator,
     this.labelText,
+    this.keyboardType = TextInputType.text,
   });
   final TextEditingController controller;
   final Color color;
   final String? Function(String?)? validator;
   final String? labelText;
+  final TextInputType? keyboardType;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       controller: controller,
       enableInteractiveSelection: true,
+      keyboardType: keyboardType,
       validator: validator,
       cursorColor: color,
       decoration: InputDecoration(

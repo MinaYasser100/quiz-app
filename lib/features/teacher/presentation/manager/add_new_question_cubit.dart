@@ -11,6 +11,7 @@ part 'add_new_question_states.dart';
 
 class AddNewQuestionCubit extends Cubit<AddNewQuestionStates> {
   final TextEditingController titleController = TextEditingController();
+  final TextEditingController timeController = TextEditingController();
   AddNewQuestionCubit() : super(AddNewQuestionInitial()) {
     emit(
         AddNewQuestionCubitLoaded([createQuestionWidget(0)], isLoading: false));
@@ -60,21 +61,29 @@ class AddNewQuestionCubit extends Cubit<AddNewQuestionStates> {
       emit(AddNewQuestionCubitLoaded(currentState.questions, isLoading: true));
       final title = titleController.text;
       final List<Map<String, dynamic>> questionData = [];
-      if (title.isEmpty) {
+      final timeText = timeController.text;
+      final int? time = int.tryParse(timeText);
+      if (title.isEmpty || time == null) {
         customShowDialog(
           context: context,
-          title: 'Quiz Title',
-          contentText: 'Please enter the quiz title to you can upload the quiz',
+          title: 'Quiz Title and Time',
+          contentText:
+              'Please enter the quiz title and time to upload the quiz',
         );
+        emit(AddNewQuestionCubitLoaded(currentState.questions,
+            isLoading: false));
+        return;
       }
       for (var widget in currentState.questions) {
         final questionWidget = widget;
         final questionText = questionWidget.questionController.text;
 
         if (questionText.isEmpty) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Question text cannot be empty.')),
-          );
+          customShowDialog(
+              context: context,
+              title: 'Question',
+              contentText:
+                  'Question text cannot be empty, please write the question');
           emit(AddNewQuestionCubitLoaded(currentState.questions,
               isLoading: false));
           return;
@@ -113,25 +122,27 @@ class AddNewQuestionCubit extends Cubit<AddNewQuestionStates> {
         try {
           DocumentReference docRef = await FirebaseFirestore.instance
               .collection('questions')
-              .add({'title': title, 'questions': questionData});
+              .add({
+            'title': title,
+            'time': time * 60,
+            'questions': questionData
+          });
           String quizID = docRef.id;
           await storeQuizIdsInHive(quizID);
           await copyQuizIdShowDialog(context, quizID);
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Data uploaded successfully')),
-          );
+          customScaffoldMessenger(context, 'Data uploaded successfully');
         } catch (e) {
-          errorScaffoldMessenger(context, e);
+          customScaffoldMessenger(context, e.toString());
         }
       }
       emit(AddNewQuestionCubitLoaded(currentState.questions, isLoading: false));
     }
   }
 
-  void errorScaffoldMessenger(BuildContext context, Object e) {
+  void customScaffoldMessenger(BuildContext context, String text) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(
-      e.toString(),
+      text,
     )));
   }
 

@@ -23,12 +23,26 @@ class TeacherBodyView extends StatelessWidget {
                   SliverToBoxAdapter(
                     child: Padding(
                       padding: const EdgeInsets.all(20),
-                      child: CustomTextFromField(
-                          controller: context
-                              .read<AddNewQuestionCubit>()
-                              .titleController,
-                          labelText: 'Quiz Title',
-                          color: AppColor.secondColor),
+                      child: Column(
+                        children: [
+                          CustomTextFromField(
+                            controller: context
+                                .read<AddNewQuestionCubit>()
+                                .titleController,
+                            labelText: 'Quiz Title',
+                            color: AppColor.secondColor,
+                          ),
+                          const SizedBox(height: 20),
+                          CustomTextFromField(
+                            controller: context
+                                .read<AddNewQuestionCubit>()
+                                .timeController,
+                            labelText: 'Quiz Time (in minutes)',
+                            color: AppColor.secondColor,
+                            keyboardType: TextInputType.number,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                   SliverList(
