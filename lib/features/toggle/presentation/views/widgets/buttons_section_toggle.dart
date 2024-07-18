@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:quiz_app/core/func/check_internet_connection.dart';
+import 'package:quiz_app/core/func/custom_no_internet_show_dialog.dart';
 import 'package:quiz_app/core/widgets/custom_button_widget.dart';
 import 'package:quiz_app/features/student/presentation/manager/student_cubit/student_cubit.dart';
 import 'package:quiz_app/features/student/presentation/views/student_view.dart';
@@ -67,8 +69,11 @@ class _ButtonsSectionToggleState extends State<ButtonsSectionToggle> {
                 height: 20,
               ),
               CustomButtonWidget(
-                onPressed: () {
-                  _quizCodeShowDialog(context);
+                onPressed: () async {
+                  bool internet = await checkInternetConnection();
+                  internet
+                      ? _quizCodeShowDialog(context)
+                      : customNoInternetShowDialog(context);
                 },
                 text: 'Student',
               ),
