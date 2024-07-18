@@ -22,7 +22,6 @@ class AllQuizIdsListViewWidget extends StatelessWidget {
         return GestureDetector(
           onTap: () async {
             bool internet = await checkInternetConnection();
-            print(internet);
             internet
                 ? Navigator.push(
                     context,

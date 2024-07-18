@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quiz_app/core/constant/app_color.dart';
+import 'package:quiz_app/core/func/check_internet_connection.dart';
+import 'package:quiz_app/core/func/custom_no_internet_show_dialog.dart';
 import 'package:quiz_app/features/teacher/presentation/manager/add_new_question_cubit.dart';
 import 'package:quiz_app/features/teacher/presentation/view/widgets/custom_text_from_field.dart';
 
@@ -66,13 +68,18 @@ class TeacherBodyView extends StatelessWidget {
                           )
                         : TeacherButtonSectionBody(
                             onFinish: () async {
-                              try {
-                                await context
-                                    .read<AddNewQuestionCubit>()
-                                    .collectAndUploadData(context);
-                              } catch (e) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(content: Text(e.toString())));
+                              bool internet = await checkInternetConnection();
+                              if (internet) {
+                                try {
+                                  await context
+                                      .read<AddNewQuestionCubit>()
+                                      .collectAndUploadData(context);
+                                } catch (e) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(content: Text(e.toString())));
+                                }
+                              } else {
+                                customNoInternetShowDialog(context);
                               }
                             },
                           ),
