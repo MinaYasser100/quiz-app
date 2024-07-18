@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:quiz_app/core/constant/app_color.dart';
+import 'package:quiz_app/core/widgets/custom_action_text_button.dart';
 
 Future<dynamic> copyQuizIdShowDialog(BuildContext context, String quizID) {
   return showDialog(
@@ -43,17 +44,7 @@ Future<dynamic> copyQuizIdShowDialog(BuildContext context, String quizID) {
           ),
         ],
       ),
-      actions: [
-        TextButton(
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-          child: const Text(
-            'OK',
-            style: TextStyle(color: Colors.black),
-          ),
-        ),
-      ],
+      actions: const [CustomActionTextButton()],
     ),
   );
 }

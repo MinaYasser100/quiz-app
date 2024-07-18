@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quiz_app/core/widgets/custom_action_text_button.dart';
 
 Future<dynamic> customShowDialog({
   required BuildContext context,
@@ -11,13 +12,8 @@ Future<dynamic> customShowDialog({
       return AlertDialog(
         title: Text(title),
         content: Text(contentText),
-        actions: <Widget>[
-          TextButton(
-            child: const Text('OK'),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
+        actions: const <Widget>[
+          CustomActionTextButton(),
         ],
       );
     },
