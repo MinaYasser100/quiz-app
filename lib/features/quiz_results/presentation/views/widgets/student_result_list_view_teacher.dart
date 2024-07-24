@@ -11,13 +11,19 @@ class StudentResultListViewTeacher extends StatelessWidget {
   final List<StudentResponseModel> studentResponseModel;
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: ListView.separated(
-        itemBuilder: (context, index) => StudentResultForTeacher(
-          studentResponseModel: studentResponseModel[index],
-        ),
-        separatorBuilder: (context, index) => const Divider(),
-        itemCount: studentResponseModel.length,
+    return SliverList(
+      delegate: SliverChildBuilderDelegate(
+        (context, index) {
+          return Column(
+            children: [
+              StudentResultForTeacher(
+                studentResponseModel: studentResponseModel[index],
+              ),
+              if (index < studentResponseModel.length - 1) const Divider(),
+            ],
+          );
+        },
+        childCount: studentResponseModel.length,
       ),
     );
   }
