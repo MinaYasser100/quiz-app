@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quiz_app/core/constant/app_color.dart';
 import 'package:quiz_app/features/show_student_answers/presentation/views/show_student_answers_view.dart';
 import 'package:quiz_app/features/student/data/model/student_response_model.dart';
 
@@ -25,7 +26,7 @@ class StudentResultForTeacher extends StatelessWidget {
         leading: const Icon(
           Icons.bookmark_sharp,
           size: 30,
-          color: Colors.lime,
+          color: AppColor.secondColor,
         ),
         title: FittedBox(
           fit: BoxFit.scaleDown,

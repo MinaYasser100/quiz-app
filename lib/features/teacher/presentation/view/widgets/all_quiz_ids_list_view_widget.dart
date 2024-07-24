@@ -12,29 +12,35 @@ class AllQuizIdsListViewWidget extends StatelessWidget {
     required this.quizzesId,
   });
   final int itemCount;
-  final List<String> quizzesId;
+  final List<Map<String, String>> quizzesId;
+
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
       padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
       itemCount: itemCount,
       itemBuilder: (context, index) {
+        final quiz = quizzesId[index];
         return GestureDetector(
           onTap: () async {
             bool internet = await checkInternetConnection();
-            internet
-                ? Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) =>
-                          QuizResultsView(quizCode: quizzesId[index]),
-                    ),
-                  )
-                : customNoInternetShowDialog(context);
+            if (internet) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => QuizResultsView(
+                    quizCode: quiz['quizID'] ?? 'No Quiz ID',
+                  ),
+                ),
+              );
+            } else {
+              customNoInternetShowDialog(context);
+            }
           },
           child: CustomQuizIdItemWidget(
             index: index,
-            quizIdText: quizzesId[index],
+            quizIdText: quiz['quizID'] ?? 'No Quiz ID',
+            titleText: quiz['title'] ?? 'No Title',
           ),
         );
       },

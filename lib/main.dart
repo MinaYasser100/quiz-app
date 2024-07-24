@@ -11,7 +11,7 @@ import 'firebase_options.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
-  await Hive.openBox<List<String>>(hiveQuizID);
+  await Hive.openBox<List<Map<String, String>>>(hiveQuizID);
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );

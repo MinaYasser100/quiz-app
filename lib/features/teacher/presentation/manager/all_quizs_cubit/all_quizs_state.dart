@@ -8,9 +8,9 @@ final class AllQuizsInitial extends AllQuizsState {}
 final class AllQuizsGetQuizIdsHiveLoading extends AllQuizsState {}
 
 final class AllQuizsGetQuizIdsHiveSuccess extends AllQuizsState {
-  final List<String> quizIds;
+  final List<Map<String, String>> quizIdsAndTitles;
 
-  AllQuizsGetQuizIdsHiveSuccess({required this.quizIds});
+  AllQuizsGetQuizIdsHiveSuccess({required this.quizIdsAndTitles});
 }
 
 final class AllQuizsGetQuizIdsHiveFailure extends AllQuizsState {

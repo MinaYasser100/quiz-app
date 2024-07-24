@@ -22,8 +22,8 @@ class AllQuizsBodyView extends StatelessWidget {
           );
         } else if (state is AllQuizsGetQuizIdsHiveSuccess) {
           return AllQuizIdsListViewWidget(
-            itemCount: state.quizIds.length,
-            quizzesId: state.quizIds,
+            itemCount: state.quizIdsAndTitles.length,
+            quizzesId: state.quizIdsAndTitles,
           );
         } else if (state is AllQuizsGetQuizIdsHiveFailure) {
           return const FailureGetQuizIdsWidget();

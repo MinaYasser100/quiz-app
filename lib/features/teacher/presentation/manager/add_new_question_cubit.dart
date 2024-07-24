@@ -128,7 +128,7 @@ class AddNewQuestionCubit extends Cubit<AddNewQuestionStates> {
             'questions': questionData
           });
           String quizID = docRef.id;
-          await storeQuizIdsInHive(quizID);
+          await storeQuizIdsInHive(quizID, title);
           await copyQuizIdShowDialog(context, quizID);
           customScaffoldMessenger(context, 'Data uploaded successfully');
         } catch (e) {

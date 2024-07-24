@@ -11,9 +11,10 @@ class AllQuizsCubit extends Cubit<AllQuizsState> {
   Future<void> getQuizIdsHive() async {
     emit(AllQuizsGetQuizIdsHiveLoading());
     try {
-      var box = Hive.box<List<String>>(hiveQuizID);
-      List<String>? quizIds = box.get('ids', defaultValue: []);
-      emit(AllQuizsGetQuizIdsHiveSuccess(quizIds: quizIds!));
+      var box = Hive.box<List<Map<String, String>>>(hiveQuizID);
+      List<Map<String, String>>? quizIdsAndTitles =
+          box.get('ids', defaultValue: []);
+      emit(AllQuizsGetQuizIdsHiveSuccess(quizIdsAndTitles: quizIdsAndTitles!));
     } catch (e) {
       emit(AllQuizsGetQuizIdsHiveFailure(error: e.toString()));
     }

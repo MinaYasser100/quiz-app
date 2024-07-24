@@ -6,9 +6,11 @@ class CustomQuizIdItemWidget extends StatelessWidget {
     super.key,
     required this.index,
     required this.quizIdText,
+    required this.titleText,
   });
   final int index;
   final String quizIdText;
+  final String titleText;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -31,6 +33,14 @@ class CustomQuizIdItemWidget extends StatelessWidget {
             ),
           ),
           title: Text(
+            titleText,
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 22,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          subtitle: Text(
             quizIdText,
             style: const TextStyle(
               color: Colors.white,
